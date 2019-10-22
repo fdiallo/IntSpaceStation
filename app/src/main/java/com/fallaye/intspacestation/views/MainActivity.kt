@@ -1,7 +1,8 @@
-package com.fallaye.intspacestation
+package com.fallaye.intspacestation.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.fallaye.intspacestation.R
 
 class MainActivity : AppCompatActivity() {
 
