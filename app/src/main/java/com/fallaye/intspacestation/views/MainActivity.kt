@@ -3,6 +3,7 @@ package com.fallaye.intspacestation.views
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fallaye.intspacestation.R
@@ -20,11 +21,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+    }
 
-        val latitude = 55.0
-        val longitude = -142.3
-        //var latidue = tvLatitude.text.toString().toDouble()
-        //var longitude = tvLongitude.text.toString().toDouble()
+    fun getISSPasses(view: View) {
+        var latitude = tvLatitude.text.toString().toDouble()
+        var longitude = tvLongitude.text.toString().toDouble()
 
         var issPositionResponse = ISSApiClient.getClient().getISSPosition(latitude, longitude)
         //var issPositionResponse = ISSApiClient.getClient().getISSPosition(100, 1571857710, 45.0, -122.3, 100)
@@ -41,7 +42,6 @@ class MainActivity : AppCompatActivity() {
                 response: retrofit2.Response<ISSPositionResponse>
             ) {
                 issPositionResponseList = response.body()!!.response
-
                 issPositionMutLiveDataList.value = issPositionResponseList
 
                 recycler_view.layoutManager = LinearLayoutManager(applicationContext)
@@ -52,5 +52,6 @@ class MainActivity : AppCompatActivity() {
         })
 
     }
+
 
 }
