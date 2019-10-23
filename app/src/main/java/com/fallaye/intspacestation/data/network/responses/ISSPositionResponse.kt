@@ -1,9 +1,8 @@
 package com.fallaye.intspacestation.data.network.responses
 
-import com.fallaye.intspacestation.data.db.entities.ISSPosition
+import com.fallaye.intspacestation.data.db.entities.Response
 
 data class ISSPositionResponse(
-    var iss_position: ISSPosition,
     var message: String,
-    var timestamp: Int
+    var response: List<Response>
 )

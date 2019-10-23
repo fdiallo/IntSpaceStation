@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fallaye.intspacestation.R
-import com.fallaye.intspacestation.data.db.entities.ISSPosition
+import com.fallaye.intspacestation.data.db.entities.Response
 import kotlinx.android.synthetic.main.iss_item.view.*
 
-class ISSPositionAdapter(val context : Context, val issList : List<ISSPosition>) :
+class ISSPositionAdapter(val context : Context, val issPositionList : List<Response>) :
     RecyclerView.Adapter<ISSPositionAdapter.ISSViewHolder>() {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ISSViewHolder {
         val inflater : LayoutInflater = LayoutInflater.from(context)
@@ -20,13 +19,13 @@ class ISSPositionAdapter(val context : Context, val issList : List<ISSPosition>)
     }
 
     override fun onBindViewHolder(holder: ISSViewHolder, position: Int) {
-        val issModel : ISSPosition = issList.get(position)
-        holder.itemView.latitude.text = "Latitude: " + issList.get(position)?.latitude
-        holder.itemView.longitude.text = "Longitude: " + issList.get(position)?.longitude
+        val response : Response = issPositionList.get(position)
+        holder.itemView.latitude.text = "Duration: " + response.duration
+        holder.itemView.longitude.text = "Ristime: " + response.risetime
     }
 
     override fun getItemCount(): Int {
-       return issList.size
+       return issPositionList.size
     }
 
     class ISSViewHolder(view : View) : RecyclerView.ViewHolder(view)

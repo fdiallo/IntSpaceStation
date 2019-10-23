@@ -17,9 +17,7 @@ object ISSApiClient {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .baseUrl(BASE_URL)
             .build().create(ISSApi::class.java)
-
     }
-
 
     private fun provideOkhttpClient(): OkHttpClient {
         val client = OkHttpClient.Builder()
@@ -28,5 +26,4 @@ object ISSApiClient {
         client.writeTimeout(30, TimeUnit.SECONDS)
         return client.build()
     }
-
 }
