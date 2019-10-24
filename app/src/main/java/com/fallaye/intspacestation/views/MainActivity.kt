@@ -1,29 +1,52 @@
 package com.fallaye.intspacestation.views
 
-import androidx.appcompat.app.AppCompatActivity
+//import com.fallaye.intspacestation.databinding.ActivityMainBinding
+
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.lifecycle.MutableLiveData
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fallaye.intspacestation.R
 import com.fallaye.intspacestation.adapter.ISSPositionAdapter
-import com.fallaye.intspacestation.data.db.entities.Response
-import com.fallaye.intspacestation.data.network.ISSApi
-import com.fallaye.intspacestation.data.network.ISSApiClient
-import com.fallaye.intspacestation.data.network.responses.ISSPositionResponse
+import com.fallaye.intspacestation.viewmodels.ISSPositionViewModel
+import com.fallaye.intspacestation.viewmodels.ISSPositionViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Call
-import javax.security.auth.callback.Callback
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), KodeinAware {
+
+    override val kodein by kodein()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
     }
 
+
     fun getISSPasses(view: View) {
+
+        var latitude = tvLatitude.text.toString().toDouble()
+        var longitude = tvLongitude.text.toString().toDouble()
+        val issViewModelFactory : ISSPositionViewModelFactory by instance(latitude, longitude)
+        var issPositionViewModel : ISSPositionViewModel
+        issPositionViewModel = ViewModelProviders.of(this, issViewModelFactory)
+            .get(ISSPositionViewModel::class.java)
+
+        recycler_view.layoutManager = LinearLayoutManager(applicationContext)
+        recycler_view.setHasFixedSize(true)
+        val issPositionAdapter = ISSPositionAdapter(applicationContext, issPositionViewModel.issPositionsList)
+        recycler_view.adapter = issPositionAdapter
+
+        tvLatitude.text.clear()
+        tvLongitude.text.clear()
+
+    }
+
+    /*fun getISSPasses(view: View) {
         var latitude = tvLatitude.text.toString().toDouble()
         var longitude = tvLongitude.text.toString().toDouble()
 
@@ -51,7 +74,10 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-    }
+        tvLatitude.text.clear()
+        tvLongitude.text.clear()
+
+    }*/
 
 
 }
